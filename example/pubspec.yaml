@@ -35,6 +35,13 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
+  assets:
+    - img/bbq4it.png
+    - img/centrumSzkoleniowe.png
+    - img/ratusz.png
+    - img/szkolaSportowa.png
+    - img/towarzystwoSportowe.png
+
   # To add assets to your application, add an assets section, like this:
   # assets:
   #  - images/a_dot_burr.jpeg
