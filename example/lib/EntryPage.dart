@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
 
-class Page1 extends StatelessWidget{
-  Color rekordColorGreen = const Color(0xff254B34);
-  Color rekordColorWhite = const Color(0xffffffff);
+class EntryPage extends StatelessWidget{
 
-  Page1({
+  EntryPage({
     Key key,
     this.parameter,
+    @required this.backgroundColor,
+    @required this.textColor,
   }): super(key:key);
-
+  final backgroundColor;
+  final textColor;
   final parameter;
 
   @override
   Widget build(BuildContext context) {
     return new Container(
 
-      color: rekordColorGreen,
+      color: backgroundColor,
       alignment: Alignment.center,
 
       child: RichText(
@@ -25,7 +26,7 @@ class Page1 extends StatelessWidget{
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 40,
-                color: rekordColorWhite,
+                color: textColor,
               ),
               children: <TextSpan>[
                 TextSpan(

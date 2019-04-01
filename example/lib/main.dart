@@ -4,10 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_nfc_reader/flutter_nfc_reader.dart';
 
-//refactor pls, more than 300 lines doesn't look good
-//things are better rn, but 250 to go
-import 'Page1.dart';
-import 'NFCservice.dart';
+import 'EntryPage.dart';
+import 'LotteryPage.dart';
 import 'ImportImages.dart';
 import 'Lottery.dart';
 
@@ -19,9 +17,10 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  //should i remove some variables from here?
   NfcData _nfcData;
   PageController _controller;
-  TimeOfDay timeOfScan = new TimeOfDay(hour: 0, minute: 0);
+  TimeOfDay _timeOfScan = new TimeOfDay(hour: 0, minute: 0);
   Color rekordColorGreen = const Color(0xff254B34);
   Color rekordColorWhite = const Color(0xffffffff);
   int numberOfSameImgs;
@@ -32,7 +31,7 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     SystemChrome.setPreferredOrientations([
-      DeviceOrientation.landscapeLeft,
+      //DeviceOrientation.landscapeLeft,
       DeviceOrientation.landscapeRight,
     ]);
     numberOfSameImgs = 0;
@@ -52,7 +51,7 @@ class _MyAppState extends State<MyApp> {
       curve: Curves.easeIn,
     );
   }
-
+  //should i move this future to another class?
   Future<void> startNFC() async {
     setState(() {
       _nfcData = NfcData();
@@ -64,7 +63,7 @@ class _MyAppState extends State<MyApp> {
         drawnImgs = drawYourLuck(3, lotteryImgs);
         numberOfSameImgs = numberOfSameImages(drawnImgs);
         _nfcData = response;
-        timeOfScan = TimeOfDay(hour: DateTime.now().hour, minute: DateTime.now().minute);
+        _timeOfScan = TimeOfDay(hour: DateTime.now().hour, minute: DateTime.now().minute);
         menuAnimate(1, 1);
         var future = new Future.delayed(new Duration(seconds: 5), (){});
         future.then((a){
@@ -105,140 +104,18 @@ class _MyAppState extends State<MyApp> {
             physics: NeverScrollableScrollPhysics(),
             controller: _controller,
             children: <Widget>[
-              new Page1(),
-              Container(
-                color: rekordColorGreen,
-                alignment: Alignment.center,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    RichText(
-
-                        textAlign: TextAlign.center,
-                        text: TextSpan(
-                            text: "\nDziękujemy!",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 40,
-                              color: rekordColorWhite,
-                            ),
-
-                            children: <TextSpan>[
-                              TextSpan(
-                                  text: _nfcData != null ? '\nTwój tag nfc to: ${_nfcData.id}' : '',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 15,
-                                  )
-                              ),
-                              TextSpan(
-                                  text: "\nCzas przybycia to: " + (timeOfScan.minute < 10 ? '${timeOfScan.hour}:0${timeOfScan.minute}' : '${timeOfScan.hour}:${timeOfScan.minute}'),
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 15,
-                                  )
-                              ),
-                              TextSpan(
-                                  text: "\n"+ (numberOfSameImgs == 0 ? 'Kiedyś się uda': (numberOfSameImgs == 1 ? 'Było blisko' : 'Szczęście Ci sprzyja!')),
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 15,
-                                  )
-                              )
-                            ]
-                        )
-
-                    ),
-
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Container(
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(10.0),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.black,
-                                  border: Border.all(
-                                    color: Colors.black,
-                                    width: 7.0,
-                                  ),
-                              ),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(5.0),
-                                child: Image(
-                                  image: drawnImgs[0].image,
-                                  width: 100,
-                                  height: 100,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          width: 5,
-                        ),
-                        Container(
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(10.0),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.black,
-                                border: Border.all(
-                                  color: Colors.black,
-                                  width: 7.0,
-                                ),
-                              ),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(5.0),
-                                child: Image(
-                                  image: drawnImgs[1].image,
-                                  width: 100,
-                                  height: 100,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          width: 5,
-                        ),
-                        Container(
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(10.0),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.black,
-                                border: Border.all(
-                                  color: Colors.black,
-                                  width: 7.0,
-                                ),
-                              ),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(5.0),
-                                child: Image(
-                                  image: drawnImgs[2].image,
-                                  width: 100,
-                                  height: 100,
-                                ),
-                              ),
-                            ),
-                          ),
-                        )
-
-
-
-                      ],
-                    )
-
-
-                  ],
-
-                )
-
-
+              new EntryPage(
+                textColor: rekordColorWhite,
+                backgroundColor: rekordColorGreen,
               ),
-
+              new LotteryPage(
+                nfcData: _nfcData,
+                timeOfScan: _timeOfScan,
+                numberOfSameImgs: numberOfSameImgs,
+                drawnImgs: drawnImgs,
+                textColor: rekordColorWhite,
+                backgroundColor: rekordColorGreen,
+              ),
             ],
           )
 
@@ -246,3 +123,6 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
+
+
+
