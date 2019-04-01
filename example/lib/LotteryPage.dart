@@ -13,6 +13,7 @@ class LotteryPage extends StatelessWidget{
     @required this.drawnImgs,
     @required this.backgroundColor,
     @required this.textColor,
+    @required this.scrollController,
   }): super(key:key);
   final nfcData;
   final timeOfScan;
@@ -21,6 +22,7 @@ class LotteryPage extends StatelessWidget{
   final backgroundColor;
   final textColor;
   final parameter;
+  final scrollController;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +33,7 @@ class LotteryPage extends StatelessWidget{
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             new LotteryTextBox(nfcData: nfcData, timeOfScan: timeOfScan, numberOfSameImgs: numberOfSameImgs, textColor: textColor,),
-            new LotteryImageBoxWidget(drawnImgs: this.drawnImgs, gapSize: 5.0),
+            new LotteryImageBoxWidget(drawnImgs: this.drawnImgs, gapSize: 5.0, scrollController: scrollController,),
 
           ],
 

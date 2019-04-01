@@ -16,7 +16,7 @@ class MyApp extends StatefulWidget {
   _MyAppState createState() => new _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _MyAppState extends State<MyApp> with TickerProviderStateMixin{
   //should i remove some variables from here?
   NfcData _nfcData;
   PageController _controller;
@@ -27,21 +27,51 @@ class _MyAppState extends State<MyApp> {
   List<Image> lotteryImgs = new List<Image>();
   List<Image> drawnImgs = new List<Image>();
 
+  List<ScrollController> lotteryControllers= new List<ScrollController>();
+
+
+  LotteryPage lotteryPage;
+  EntryPage entryPage;
+
   @override
   void initState() {
-    super.initState();
     SystemChrome.setPreferredOrientations([
       //DeviceOrientation.landscapeLeft,
       DeviceOrientation.landscapeRight,
     ]);
     numberOfSameImgs = 0;
+
     lotteryImgs = importImg();
     drawnImgs.add(lotteryImgs[1]);
     drawnImgs.add(lotteryImgs[1]);
     drawnImgs.add(lotteryImgs[2]);
     _controller = new PageController();
 
+    for(int i = 0; i < 3; ++i){
+      lotteryControllers.add(new ScrollController());
+    }
+    lotteryPage = new LotteryPage(
+      nfcData: _nfcData,
+      timeOfScan: _timeOfScan,
+      numberOfSameImgs: numberOfSameImgs,
+      drawnImgs: drawnImgs,
+      textColor: rekordColorWhite,
+      backgroundColor: rekordColorGreen,
+      scrollController: lotteryControllers,
+    );
+
+    entryPage = new EntryPage(
+      textColor: rekordColorWhite,
+      backgroundColor: rekordColorGreen,
+    );
+
     startNFC();
+    super.initState();
+  }
+
+  @override
+  void didUpdateWidget(MyApp oldWidget) {
+    super.didUpdateWidget(oldWidget);
   }
 
   Future<void> menuAnimate(int destinatedPage, int durationInSeconds)async{
@@ -65,14 +95,33 @@ class _MyAppState extends State<MyApp> {
         _nfcData = response;
         _timeOfScan = TimeOfDay(hour: DateTime.now().hour, minute: DateTime.now().minute);
         menuAnimate(1, 1);
-        var future = new Future.delayed(new Duration(seconds: 5), (){});
-        future.then((a){
-          menuAnimate(0, 1);
+        var future = new Future.delayed(new Duration(seconds: 2), (){});
+        future.then((a) {
+          lotteryPage.scrollController[0].animateTo(
+              2000.0, duration: new Duration(milliseconds: 500),
+              curve: Curves.easeIn);
+
+          future = new Future.delayed(new Duration(seconds: 1), (){});
+          future.then((a) {
+            lotteryPage.scrollController[1].animateTo(
+                2000.0, duration: new Duration(milliseconds: 500),
+                curve: Curves.easeIn);
+            future = new Future.delayed(new Duration(seconds: 1), (){});
+            future.then((a){
+              lotteryPage.scrollController[2].animateTo(
+                  2000.0, duration: new Duration(milliseconds: 500),
+                  curve: Curves.easeIn);
+              future = new Future.delayed(new Duration(seconds: 3),(){});
+              future.then((a){
+                menuAnimate(0, 1);
+              });
+            });
+          });
         });
       });
     });
   }
-
+  // how to stop nfc ? and when to stop
   Future<void> stopNFC() async {
     NfcData response;
 
@@ -95,7 +144,6 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
@@ -104,18 +152,8 @@ class _MyAppState extends State<MyApp> {
             physics: NeverScrollableScrollPhysics(),
             controller: _controller,
             children: <Widget>[
-              new EntryPage(
-                textColor: rekordColorWhite,
-                backgroundColor: rekordColorGreen,
-              ),
-              new LotteryPage(
-                nfcData: _nfcData,
-                timeOfScan: _timeOfScan,
-                numberOfSameImgs: numberOfSameImgs,
-                drawnImgs: drawnImgs,
-                textColor: rekordColorWhite,
-                backgroundColor: rekordColorGreen,
-              ),
+              entryPage,
+              lotteryPage,
             ],
           )
 

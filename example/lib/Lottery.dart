@@ -2,6 +2,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
+
+// fix randomizing not working no class
 Image findRandomImg( List<Image> l){
   Random r = new Random();
   return l[r.nextInt(l.length-1)];

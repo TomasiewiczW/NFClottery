@@ -12,33 +12,37 @@ class EntryPage extends StatelessWidget{
   final textColor;
   final parameter;
 
+
+
   @override
   Widget build(BuildContext context) {
-    return new Container(
-
+    return new AnimatedContainer(
+      duration: new Duration(seconds: 3),
       color: backgroundColor,
       alignment: Alignment.center,
+      child:
+         RichText(
+            textAlign: TextAlign.center,
+            text: TextSpan(
+                text: "\nWitaj Pracowniku!",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 40,
+                  color: textColor,
+                ),
+                children: <TextSpan>[
+                  TextSpan(
+                      text: "\nZbliż telefon z włączonym modułem nfc",
+                      style: TextStyle(
+                        fontWeight: FontWeight.normal,
+                        fontSize: 15,
+                      )
+                  )
+                ]
+            )
+        ),
 
-      child: RichText(
-          textAlign: TextAlign.center,
-          text: TextSpan(
-              text: "\nWitaj Pracowniku!",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 40,
-                color: textColor,
-              ),
-              children: <TextSpan>[
-                TextSpan(
-                    text: "\nZbliż telefon z włączonym modułem nfc",
-                    style: TextStyle(
-                      fontWeight: FontWeight.normal,
-                      fontSize: 15,
-                    )
-                )
-              ]
-          )
-      ),
+
 
     );
   }
