@@ -6,7 +6,6 @@ import 'package:flutter_nfc_reader/flutter_nfc_reader.dart';
 
 import 'EntryPage.dart';
 import 'LotteryPage.dart';
-import 'ImportImages.dart';
 import 'Lottery.dart';
 
 void main() => runApp(new MyApp());
@@ -19,13 +18,14 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> with TickerProviderStateMixin{
   //should i remove some variables from here?
   NfcData _nfcData;
-  PageController _controller;
-  TimeOfDay _timeOfScan = new TimeOfDay(hour: 0, minute: 0);
   Color rekordColorGreen = const Color(0xff254B34);
   Color rekordColorWhite = const Color(0xffffffff);
+
+  RandomImg images = new RandomImg();
+
+  PageController _controller;
+  TimeOfDay _timeOfScan = new TimeOfDay(hour: 0, minute: 0);
   int numberOfSameImgs;
-  List<Image> lotteryImgs = new List<Image>();
-  List<Image> drawnImgs = new List<Image>();
 
   List<ScrollController> lotteryControllers= new List<ScrollController>();
 
@@ -41,20 +41,17 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin{
     ]);
     numberOfSameImgs = 0;
 
-    lotteryImgs = importImg();
-    drawnImgs.add(lotteryImgs[1]);
-    drawnImgs.add(lotteryImgs[1]);
-    drawnImgs.add(lotteryImgs[2]);
+
     _controller = new PageController();
 
     for(int i = 0; i < 3; ++i){
-      lotteryControllers.add(new ScrollController());
+      lotteryControllers.add(new ScrollController(initialScrollOffset: 10));
     }
     lotteryPage = new LotteryPage(
       nfcData: _nfcData,
       timeOfScan: _timeOfScan,
       numberOfSameImgs: numberOfSameImgs,
-      drawnImgs: drawnImgs,
+      randomImages: images,
       textColor: rekordColorWhite,
       backgroundColor: rekordColorGreen,
       scrollController: lotteryControllers,
@@ -67,11 +64,6 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin{
 
     startNFC();
     super.initState();
-  }
-
-  @override
-  void didUpdateWidget(MyApp oldWidget) {
-    super.didUpdateWidget(oldWidget);
   }
 
   Future<void> menuAnimate(int destinatedPage, int durationInSeconds)async{
@@ -90,28 +82,34 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin{
 
     FlutterNfcReader.read.listen((response) {
       setState(() {
-        drawnImgs = drawYourLuck(3, lotteryImgs);
-        numberOfSameImgs = numberOfSameImages(drawnImgs);
+
+
         _nfcData = response;
         _timeOfScan = TimeOfDay(hour: DateTime.now().hour, minute: DateTime.now().minute);
+
+        images.drawAgain();
+        numberOfSameImgs = images.numberOfSameImages();
+
+
         menuAnimate(1, 1);
+
         var future = new Future.delayed(new Duration(seconds: 2), (){});
         future.then((a) {
-          lotteryPage.scrollController[0].animateTo(
-              2000.0, duration: new Duration(milliseconds: 500),
-              curve: Curves.easeIn);
 
+          lotteryPage.scrollController[0].animateTo(
+              1700.0 + 10.0, duration: new Duration(seconds: 5),
+              curve: Curves.elasticOut);
           future = new Future.delayed(new Duration(seconds: 1), (){});
           future.then((a) {
             lotteryPage.scrollController[1].animateTo(
-                2000.0, duration: new Duration(milliseconds: 500),
-                curve: Curves.easeIn);
+                1700.0 + 10.0, duration: new Duration(seconds: 5),
+                curve: Curves.elasticOut);
             future = new Future.delayed(new Duration(seconds: 1), (){});
             future.then((a){
               lotteryPage.scrollController[2].animateTo(
-                  2000.0, duration: new Duration(milliseconds: 500),
-                  curve: Curves.easeIn);
-              future = new Future.delayed(new Duration(seconds: 3),(){});
+                  1700.0 + 10.0, duration: new Duration(seconds: 5),
+                  curve: Curves.elasticOut);
+              future = new Future.delayed(new Duration(seconds: 10),(){});
               future.then((a){
                 menuAnimate(0, 1);
               });
@@ -153,7 +151,15 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin{
             controller: _controller,
             children: <Widget>[
               entryPage,
-              lotteryPage,
+            lotteryPage = new LotteryPage(
+              nfcData: _nfcData,
+              timeOfScan: _timeOfScan,
+              numberOfSameImgs: numberOfSameImgs,
+              randomImages: images,
+              textColor: rekordColorWhite,
+              backgroundColor: rekordColorGreen,
+              scrollController: lotteryControllers,
+            )
             ],
           )
 

@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 
 class LotteryImageBoxWidget extends StatelessWidget{
   LotteryImageBoxWidget({
-    @required this.drawnImgs,
+    @required this.randomImages,
     @required this.gapSize,
     @required this.scrollController,
     Key key,
     this.parameter,
   }): super(key:key);
   final parameter;
-  final drawnImgs;
+  final randomImages;
   final gapSize;
   final scrollController;
 
@@ -18,44 +18,61 @@ class LotteryImageBoxWidget extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return new Row(
+
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Container(
           width: 190,
-          height: 190,
+          height: 170,
           child: new ListView(
             physics: NeverScrollableScrollPhysics(),
-            padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),
+            shrinkWrap: true,
+            padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
             controller: scrollController[0],
             children: <Widget>[
-              new LotteryImageWidget(drawnImgs: this.drawnImgs, drawnImgsIndex: 1,),
-              new LotteryImageWidget(drawnImgs: this.drawnImgs, drawnImgsIndex: 1,),
-              new LotteryImageWidget(drawnImgs: this.drawnImgs, drawnImgsIndex: 1,),
-              new LotteryImageWidget(drawnImgs: this.drawnImgs, drawnImgsIndex: 1,),
-              new LotteryImageWidget(drawnImgs: this.drawnImgs, drawnImgsIndex: 1,),
-              new LotteryImageWidget(drawnImgs: this.drawnImgs, drawnImgsIndex: 1,),
+              new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 0,),
+              new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 1,),
+              new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 2,),
+              new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 3,),
+              new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 1,),
+              new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 0,),
+              new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 1,),
+              new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 4,),
+              new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 3,),
+              new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 4,),
+              new LotteryImageWidget(drawnImgs: this.randomImages.drawnImages, drawnImgsIndex: 0,),
+              new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 1,),
+              new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 2,),
+              new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 3,),
             ],
-
           ),
         ),
-        //new LotteryImageWidget(drawnImgs: this.drawnImgs, drawnImgsIndex: 0,),
+
         Container(
           width: this.gapSize,
         ),
         Container(
           width: 190,
-          height: 190,
+          height: 170,
           child: new ListView(
             physics: NeverScrollableScrollPhysics(),
-            padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),
+            padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
             controller: scrollController[1],
             children: <Widget>[
-              new LotteryImageWidget(drawnImgs: this.drawnImgs, drawnImgsIndex: 1,),
-              new LotteryImageWidget(drawnImgs: this.drawnImgs, drawnImgsIndex: 1,),
-              new LotteryImageWidget(drawnImgs: this.drawnImgs, drawnImgsIndex: 1,),
-              new LotteryImageWidget(drawnImgs: this.drawnImgs, drawnImgsIndex: 1,),
-              new LotteryImageWidget(drawnImgs: this.drawnImgs, drawnImgsIndex: 1,),
-              new LotteryImageWidget(drawnImgs: this.drawnImgs, drawnImgsIndex: 1,),
+              new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 1,),
+              new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 3,),
+              new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 2,),
+              new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 3,),
+              new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 4,),
+              new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 2,),
+              new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 1,),
+              new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 1,),
+              new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 3,),
+              new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 3,),
+              new LotteryImageWidget(drawnImgs: this.randomImages.drawnImages, drawnImgsIndex: 1,),
+              new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 1,),
+              new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 1,),
+              new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 2,),
             ],
 
           ),
@@ -65,18 +82,26 @@ class LotteryImageBoxWidget extends StatelessWidget{
         ),
         Container(
           width: 190,
-          height: 190,
+          height: 170,
           child: new ListView(
             physics: NeverScrollableScrollPhysics(),
-            padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),
+            padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
             controller: scrollController[2],
             children: <Widget>[
-              new LotteryImageWidget(drawnImgs: this.drawnImgs, drawnImgsIndex: 1,),
-              new LotteryImageWidget(drawnImgs: this.drawnImgs, drawnImgsIndex: 1,),
-              new LotteryImageWidget(drawnImgs: this.drawnImgs, drawnImgsIndex: 1,),
-              new LotteryImageWidget(drawnImgs: this.drawnImgs, drawnImgsIndex: 1,),
-              new LotteryImageWidget(drawnImgs: this.drawnImgs, drawnImgsIndex: 1,),
-              new LotteryImageWidget(drawnImgs: this.drawnImgs, drawnImgsIndex: 1,),
+              new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 3,),
+              new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 1,),
+              new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 2,),
+              new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 3,),
+              new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 2,),
+              new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 0,),
+              new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 1,),
+              new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 1,),
+              new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 3,),
+              new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 1,),
+              new LotteryImageWidget(drawnImgs: this.randomImages.drawnImages, drawnImgsIndex: 2,),
+              new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 3,),
+              new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 1,),
+              new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 2,),
             ],
 
           ),
