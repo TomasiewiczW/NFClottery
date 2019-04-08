@@ -32,7 +32,7 @@ class LotteryTextBox extends StatelessWidget{
 
             children: <TextSpan>[
               TextSpan(
-                  text: nfcData != null ? '\nTwój tag nfc to: ${nfcData.id}' : '',
+                  text: nfcData != null ? '\nTwój tag nfc to: $nfcData' : '',
                   style: TextStyle(
                     fontWeight: FontWeight.normal,
                     fontSize: 15,

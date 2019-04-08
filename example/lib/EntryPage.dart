@@ -7,43 +7,56 @@ class EntryPage extends StatelessWidget{
     this.parameter,
     @required this.backgroundColor,
     @required this.textColor,
+    @required this.textEditingController,
   }): super(key:key);
   final backgroundColor;
   final textColor;
   final parameter;
+  final textEditingController;
 
 
 
   @override
   Widget build(BuildContext context) {
-    return new AnimatedContainer(
-      duration: new Duration(seconds: 3),
+    return new Container(
       color: backgroundColor,
       alignment: Alignment.center,
-      child:
-         RichText(
-            textAlign: TextAlign.center,
-            text: TextSpan(
-                text: "\nWitaj Pracowniku!",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 40,
-                  color: textColor,
-                ),
-                children: <TextSpan>[
-                  TextSpan(
-                      text: "\nZbliż telefon z włączonym modułem nfc",
+      child: Container(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                RichText(
+                  textAlign: TextAlign.center,
+                  text: TextSpan(
+                      text: "\nWitaj Pracowniku!",
                       style: TextStyle(
-                        fontWeight: FontWeight.normal,
-                        fontSize: 15,
-                      )
-                  )
-                ]
+                        fontWeight: FontWeight.bold,
+                        fontSize: 40,
+                        color: textColor,
+                      ),
+                      children: <TextSpan>[
+                        TextSpan(
+                            text: "\nZbliż telefon z włączonym modułem nfc",
+                            style: TextStyle(
+                              fontWeight: FontWeight.normal,
+                              fontSize: 15,
+                            )
+                        )
+                      ]
+                  ),
+                ),
+                Opacity(
+                  opacity: 0.0,
+                  child: TextField(
+                    autofocus: true,
+                    controller: textEditingController,
+
+                  ),
+                )
+
+              ],
             )
-        ),
-
-
-
+          )
     );
   }
 

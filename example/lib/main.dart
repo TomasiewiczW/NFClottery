@@ -17,7 +17,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> with TickerProviderStateMixin{
   //should i remove some variables from here?
-  NfcData _nfcData;
+  String _nfcData;
   Color rekordColorGreen = const Color(0xff254B34);
   Color rekordColorWhite = const Color(0xffffffff);
 
@@ -28,6 +28,8 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin{
   int numberOfSameImgs;
 
   List<ScrollController> lotteryControllers= new List<ScrollController>();
+  
+  TextEditingController textEditingController = new TextEditingController();
 
 
   LotteryPage lotteryPage;
@@ -60,11 +62,13 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin{
     entryPage = new EntryPage(
       textColor: rekordColorWhite,
       backgroundColor: rekordColorGreen,
+      textEditingController: textEditingController,
     );
 
     startNFC();
     super.initState();
   }
+  
 
   Future<void> menuAnimate(int destinatedPage, int durationInSeconds)async{
     return _controller.animateToPage(
@@ -76,15 +80,11 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin{
   //should i move this future to another class?
   Future<void> startNFC() async {
     setState(() {
-      _nfcData = NfcData();
-      _nfcData.status = NFCStatus.reading;
     });
-
-    FlutterNfcReader.read.listen((response) {
+    textEditingController.addListener((){
+      if(textEditingController.text!='')
       setState(() {
-
-
-        _nfcData = response;
+        _nfcData = textEditingController.text;
         _timeOfScan = TimeOfDay(hour: DateTime.now().hour, minute: DateTime.now().minute);
 
         images.drawAgain();
@@ -112,6 +112,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin{
               future = new Future.delayed(new Duration(seconds: 10),(){});
               future.then((a){
                 menuAnimate(0, 1);
+                textEditingController.text = '';
               });
             });
           });
@@ -138,7 +139,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin{
     }
 
     setState(() {
-      _nfcData = response;
+      _nfcData = textEditingController.text;
     });
   }
 
