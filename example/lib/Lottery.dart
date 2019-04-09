@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 
-// fix randomizing not working no class
 class RandomImg{
   List<Image> importedImages;
   List<Image> drawnImages;
@@ -15,7 +14,6 @@ class RandomImg{
   void drawAgain(){
     drawnImages = _drawYourLuck(drawnImages.length, importedImages);
   }
-
 
   List<Image> importImg(){
     List<Image> l = new List<Image>();

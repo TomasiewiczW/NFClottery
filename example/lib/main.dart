@@ -7,6 +7,8 @@ import 'package:flutter_nfc_reader/flutter_nfc_reader.dart';
 import 'EntryPage.dart';
 import 'LotteryPage.dart';
 import 'Lottery.dart';
+import 'Service.dart';
+
 
 void main() => runApp(new MyApp());
 
@@ -17,6 +19,8 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> with TickerProviderStateMixin{
   //should i remove some variables from here?
+  Service _service = new Service();
+
   String _nfcData;
   Color rekordColorGreen = const Color(0xff254B34);
   Color rekordColorWhite = const Color(0xffffffff);
@@ -38,7 +42,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin{
   @override
   void initState() {
     SystemChrome.setPreferredOrientations([
-      //DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeLeft,
       DeviceOrientation.landscapeRight,
     ]);
     numberOfSameImgs = 0;
@@ -77,6 +81,9 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin{
       curve: Curves.easeIn,
     );
   }
+
+
+
   //should i move this future to another class?
   Future<void> startNFC() async {
     setState(() {
@@ -90,6 +97,8 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin{
         images.drawAgain();
         numberOfSameImgs = images.numberOfSameImages();
 
+        var a = _service.findUserByNfcCode("23qedwdscA");
+        print(a);
 
         menuAnimate(1, 1);
 

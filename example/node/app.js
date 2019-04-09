@@ -1,6 +1,27 @@
-var http = require('http');
+const express = require('express');
+const bodyParser = require('body-parser');
+const app = express();
+const port = 3000;
+const sqlite3 = require('sqlite3').verbose();
+let db =  new sqlite3.Database('chinook.db');
 
-http.createServer(function (req, res) {
-  res.writeHead(200, {'Content-Type': 'text/html'});
-  res.end('Hello World!');
-}).listen(8080);
+app.get('/get', (req, res) => {
+    db.all('SELECT Title FROM albums Where AlbumId = 4', (err, rows) => {
+        console.log(rows);
+        res.send(rows);
+    })
+});
+
+app.use(bodyParser.json());
+app.listen(port, () => console.log(`Server is listening on port ${port}`));
+
+
+function closeDb(){
+    db.close((err) => {
+        if (err) {
+          return console.error(err.message);
+        }
+        console.log('Close the database connection.');
+      });   
+}
+
