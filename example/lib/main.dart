@@ -28,7 +28,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin{
   RandomImg images = new RandomImg();
 
   PageController _controller;
-  TimeOfDay _timeOfScan = new TimeOfDay(hour: 0, minute: 0);
+  DateTime _timeOfScan = new DateTime(2019);
   int numberOfSameImgs;
 
   List<ScrollController> lotteryControllers= new List<ScrollController>();
@@ -91,14 +91,20 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin{
     textEditingController.addListener((){
       if(textEditingController.text!='')
       setState(() {
-        _nfcData = textEditingController.text;
-        _timeOfScan = TimeOfDay(hour: DateTime.now().hour, minute: DateTime.now().minute);
+        //_nfcData = textEditingController.text;
+
+        //var a = _service.findUserByNfcCode(textEditingController.text);
+
+        _service.findUserByNfcCode("3679236004");
+        _nfcData = _service.scannedPerson.FirstName + " " + _service.scannedPerson.LastName;
+        _timeOfScan = DateTime.now();
+        _timeOfScan.add(new Duration(hours: 2));
+        print(_timeOfScan);
+
+        _service.addUser(_service.scannedPerson.FirstName, _service.scannedPerson.LastName, "15-04-2019 ${_timeOfScan.hour}:${_timeOfScan.minute}:${_timeOfScan.second}");
 
         images.drawAgain();
         numberOfSameImgs = images.numberOfSameImages();
-
-        var a = _service.findUserByNfcCode("23qedwdscA");
-        print(a);
 
         menuAnimate(1, 1);
 
