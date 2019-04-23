@@ -95,11 +95,11 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin{
 
         //var a = _service.findUserByNfcCode(textEditingController.text);
 
-        _service.findUserByNfcCode("3679236004");
+        _service.findUserByNfcCode(12312312);
         _nfcData = _service.scannedPerson.FirstName + " " + _service.scannedPerson.LastName;
         _timeOfScan = DateTime.now();
         _timeOfScan.add(new Duration(hours: 2));
-        print(_timeOfScan);
+        //print(_timeOfScan);
 
         _service.addUser(_service.scannedPerson.FirstName, _service.scannedPerson.LastName, "15-04-2019 ${_timeOfScan.hour}:${_timeOfScan.minute}:${_timeOfScan.second}");
 

@@ -3,40 +3,50 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class Person{
-  int PersonID;
+  int WorkerID;
   String LastName;
   String FirstName;
-  String NfcCode;
+  int NfcCode;
+  int IsCurrentlyWorking;
 
   Person({
-    this.PersonID,
+    this.WorkerID,
     this.LastName,
     this.FirstName,
     this.NfcCode,
+    this.IsCurrentlyWorking,
 });
 
   factory Person.fromJson(Map<String, dynamic> json){
     return Person(
-      PersonID: json["PersonID"],
-      LastName: json["LastName"],
-      FirstName: json["FirstName"],
-      NfcCode: json["NfcCode"]);
+        WorkerID: json["WorkerID"],
+        FirstName: json["FirstName"],
+        LastName: json["LastName"],
+        NfcCode: json["NfcCode"],
+        IsCurrentlyWorking: json["IsCurrentlyWorking"]
+    );
   }
 
 }
 
 class Service{
 
-  Person scannedPerson = new Person();
+  Person scannedPerson = new Person(
+    WorkerID: 0,
+    FirstName: "n",
+    LastName: "n",
+    NfcCode: 0,
+    IsCurrentlyWorking: 0
+  );
 
   //String debugHttpAddressBeginning = "http://10.0.2.2:3000/";
   static String debugHttpAddressBeginning = "http://10.0.2.2:3000/";
   //String serviceHttpAddressBeginning = "http://localhost:3000/";
   static String serviceHttpAddressBeginning = debugHttpAddressBeginning;
   
-  Future<String> findUserByNfcCode(String NfcCode) async{
+  Future<String> findUserByNfcCode(int NfcCode) async{
     var response = await http.get(
-      Uri.encodeFull(debugHttpAddressBeginning + "FindWorkerByNFCCode/?NfcCode=$NfcCode"),
+      Uri.encodeFull("http://10.0.2.2:3000/FindWorkerByNfcCode/?NfcCode=$NfcCode"),
       headers: {
         "accept": "application/json"
       }
@@ -51,12 +61,14 @@ class Service{
   }
 
   Future<String> addUser(String FirstName, String LastName, String DateAndTime) async {
-    var response = await http.post(
-        Uri.encodeFull("http://10.0.2.2:3000/WorkerScanned/?PersonId=1&LastName=\"$LastName\"&FirstName=\"$FirstName\"&DateAndTime=\'$DateAndTime\'"),
+    await http.post(
+        Uri.encodeFull("http://10.0.2.2:3000/WorkerScanned/?FirstName=\"$FirstName\"&LastName=\"$LastName\"&DateAndTime=\'$DateAndTime\'"),
         headers: {
           "accept": "application/json"
         }
     );
+
+
 
     return "Success!";
   }
