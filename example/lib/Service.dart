@@ -30,11 +30,10 @@ class Person{
 }
 
 class Service{
-
   Person scannedPerson = new Person(
     WorkerID: 0,
-    FirstName: "n",
-    LastName: "n",
+    FirstName: "User not found",
+    LastName: "",
     NfcCode: 0,
     IsCurrentlyWorking: 0
   );
@@ -53,10 +52,18 @@ class Service{
     );
     List<dynamic> data = jsonDecode(response.body);
     if(data.length==0){
+      scannedPerson = new Person(
+          WorkerID: 0,
+          FirstName: "User not found",
+          LastName: "",
+          NfcCode: 0,
+          IsCurrentlyWorking: 0
+      );
       return "Fail";
     }
     Map<String, dynamic> a = data[0];
     scannedPerson = new Person.fromJson(a);
+    print("did it");
     return "Success!";
   }
 

@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_nfc_reader/flutter_nfc_reader.dart';
 
 import 'EntryPage.dart';
 import 'LotteryPage.dart';
@@ -18,7 +17,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> with TickerProviderStateMixin{
-  //should i remove some variables from here?
   Service _service = new Service();
 
   String _nfcData;
@@ -33,8 +31,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin{
 
   List<ScrollController> lotteryControllers= new List<ScrollController>();
   
-  TextEditingController textEditingController = new TextEditingController();
-
+  TextEditingController textEditingController = new TextEditingController(text: '');
 
   LotteryPage lotteryPage;
   EntryPage entryPage;
@@ -46,7 +43,6 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin{
       DeviceOrientation.landscapeRight,
     ]);
     numberOfSameImgs = 0;
-
 
     _controller = new PageController();
 
@@ -86,8 +82,6 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin{
 
   //should i move this future to another class?
   Future<void> startNFC() async {
-    setState(() {
-    });
     textEditingController.addListener((){
       if(textEditingController.text!='')
       setState(() {
@@ -95,7 +89,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin{
 
         //var a = _service.findUserByNfcCode(textEditingController.text);
 
-        _service.findUserByNfcCode(12312312);
+        _service.findUserByNfcCode(12312311);
         _nfcData = _service.scannedPerson.FirstName + " " + _service.scannedPerson.LastName;
         _timeOfScan = DateTime.now();
         _timeOfScan.add(new Duration(hours: 2));
@@ -135,28 +129,6 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin{
       });
     });
   }
-  // how to stop nfc ? and when to stop
-  Future<void> stopNFC() async {
-    NfcData response;
-
-    try {
-      print('NFC: Stop scan by user');
-      response = await FlutterNfcReader.stop;
-    } on PlatformException {
-      print('NFC: Stop scan exception');
-      response = NfcData(
-        id: '',
-        content: '',
-        error: 'NFC scan stop exception',
-        statusMapper: '',
-      );
-      response.status = NFCStatus.error;
-    }
-
-    setState(() {
-      _nfcData = textEditingController.text;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -178,7 +150,6 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin{
             )
             ],
           )
-
           ),
     );
   }
