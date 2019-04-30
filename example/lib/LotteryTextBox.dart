@@ -20,7 +20,6 @@ class LotteryTextBox extends StatelessWidget{
   Widget build(BuildContext context) {
     return new
     RichText(
-
         textAlign: TextAlign.center,
         text: TextSpan(
             text: "\nDziękujemy!",
@@ -29,7 +28,6 @@ class LotteryTextBox extends StatelessWidget{
               fontSize: 40,
               color: textColor,
             ),
-
             children: <TextSpan>[
               TextSpan(
                   text: nfcData != null ? '\nWitaj $nfcData' : '',
@@ -54,8 +52,6 @@ class LotteryTextBox extends StatelessWidget{
               )
             ]
         )
-
     );
-
   }
 }

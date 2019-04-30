@@ -13,12 +13,9 @@ class LotteryImageBoxWidget extends StatelessWidget{
   final gapSize;
   final scrollController;
 
-
-
   @override
   Widget build(BuildContext context) {
     return new Row(
-
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Container(
@@ -30,6 +27,7 @@ class LotteryImageBoxWidget extends StatelessWidget{
             padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
             controller: scrollController[0],
             children: <Widget>[
+              //list of lotteryImagesRoulette elements
               new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 0,),
               new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 1,),
               new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 2,),
@@ -47,7 +45,6 @@ class LotteryImageBoxWidget extends StatelessWidget{
             ],
           ),
         ),
-
         Container(
           width: this.gapSize,
         ),
@@ -59,6 +56,7 @@ class LotteryImageBoxWidget extends StatelessWidget{
             padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
             controller: scrollController[1],
             children: <Widget>[
+              //list of lotteryImagesRoulette elements
               new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 1,),
               new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 3,),
               new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 2,),
@@ -88,6 +86,7 @@ class LotteryImageBoxWidget extends StatelessWidget{
             padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
             controller: scrollController[2],
             children: <Widget>[
+              //list of lotteryImagesRoulette elements
               new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 3,),
               new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 1,),
               new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 2,),
@@ -125,7 +124,6 @@ class LotteryImageWidget extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return new Container(
-
       child: ClipRRect(
         borderRadius: BorderRadius.circular(10.0),
         child: Container(

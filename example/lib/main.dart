@@ -18,10 +18,10 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> with TickerProviderStateMixin{
   Service _service = new Service();
-
-  String _nfcData;
   Color rekordColorGreen = const Color(0xff254B34);
   Color rekordColorWhite = const Color(0xffffffff);
+
+  String _nameBondedToNfcCode;
 
   RandomImg images = new RandomImg();
 
@@ -46,11 +46,11 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin{
 
     _controller = new PageController();
 
-    for(int i = 0; i < 3; ++i){
-      lotteryControllers.add(new ScrollController(initialScrollOffset: 10));
-    }
+    //necessary scrollControllers adjustment
+    for(int i = 0; i < 3; ++i) lotteryControllers.add(new ScrollController(initialScrollOffset: 10));
+
     lotteryPage = new LotteryPage(
-      nfcData: _nfcData,
+      nfcData: _nameBondedToNfcCode,
       timeOfScan: _timeOfScan,
       numberOfSameImgs: numberOfSameImgs,
       randomImages: images,
@@ -58,17 +58,15 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin{
       backgroundColor: rekordColorGreen,
       scrollController: lotteryControllers,
     );
-
     entryPage = new EntryPage(
       textColor: rekordColorWhite,
       backgroundColor: rekordColorGreen,
       textEditingController: textEditingController,
     );
 
-    startNFC();
+    listenForNfcTagReading();
     super.initState();
   }
-  
 
   Future<void> menuAnimate(int destinatedPage, int durationInSeconds)async{
     return _controller.animateToPage(
@@ -78,33 +76,29 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin{
     );
   }
 
-
-
-  //should i move this future to another class?
-  Future<void> startNFC() async {
+  Future<void> listenForNfcTagReading() async {
     textEditingController.addListener((){
       if(textEditingController.text!='')
       setState(() {
-        //_nfcData = textEditingController.text;
+        _service.findUserByNfcCode(int.parse(textEditingController.text));
 
-        //var a = _service.findUserByNfcCode(textEditingController.text);
-
-        _service.findUserByNfcCode(12312311);
-        _nfcData = _service.scannedPerson.FirstName + " " + _service.scannedPerson.LastName;
+        _nameBondedToNfcCode = _service.scannedPerson.FirstName + " " + _service.scannedPerson.LastName;
         _timeOfScan = DateTime.now();
-        _timeOfScan.add(new Duration(hours: 2));
-        //print(_timeOfScan);
 
-        _service.addUser(_service.scannedPerson.FirstName, _service.scannedPerson.LastName, "15-04-2019 ${_timeOfScan.hour}:${_timeOfScan.minute}:${_timeOfScan.second}");
+        //problem with timezone probably
+        _timeOfScan.add(new Duration(hours: 2));
+
+        _service.addUser(_service.scannedPerson.FirstName, _service.scannedPerson.LastName,
+            "${_timeOfScan.day}-${_timeOfScan.month}-${_timeOfScan.year} ${_timeOfScan.hour}:${_timeOfScan.minute}:${_timeOfScan.second}");
 
         images.drawAgain();
         numberOfSameImgs = images.numberOfSameImages();
-
+        
+        
+        //sequence of menu movement
         menuAnimate(1, 1);
-
         var future = new Future.delayed(new Duration(seconds: 2), (){});
         future.then((a) {
-
           lotteryPage.scrollController[0].animateTo(
               1700.0 + 10.0, duration: new Duration(seconds: 5),
               curve: Curves.elasticOut);
@@ -120,8 +114,8 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin{
                   curve: Curves.elasticOut);
               future = new Future.delayed(new Duration(seconds: 10),(){});
               future.then((a){
-                menuAnimate(0, 1);
                 textEditingController.text = '';
+                menuAnimate(0, 1);
               });
             });
           });
@@ -140,7 +134,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin{
             children: <Widget>[
               entryPage,
             lotteryPage = new LotteryPage(
-              nfcData: _nfcData,
+              nfcData: _nameBondedToNfcCode,
               timeOfScan: _timeOfScan,
               numberOfSameImgs: numberOfSameImgs,
               randomImages: images,

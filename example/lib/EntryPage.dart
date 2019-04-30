@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class EntryPage extends StatelessWidget{
-
   EntryPage({
     Key key,
     this.parameter,
@@ -13,8 +12,6 @@ class EntryPage extends StatelessWidget{
   final textColor;
   final parameter;
   final textEditingController;
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -50,10 +47,8 @@ class EntryPage extends StatelessWidget{
                   child: TextField(
                     autofocus: true,
                     controller: textEditingController,
-
                   ),
                 )
-
               ],
             )
           )

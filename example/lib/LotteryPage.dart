@@ -34,13 +34,8 @@ class LotteryPage extends StatelessWidget{
           children: <Widget>[
             new LotteryTextBox(nfcData: nfcData, timeOfScan: timeOfScan, numberOfSameImgs: numberOfSameImgs, textColor: textColor,),
             new LotteryImageBoxWidget(randomImages: this.randomImages, gapSize: 5.0, scrollController: scrollController,),
-
           ],
-
         )
-
-
     );
   }
-
 }
