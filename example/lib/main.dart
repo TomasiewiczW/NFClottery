@@ -85,15 +85,11 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin{
         _nameBondedToNfcCode = _service.scannedPerson.FirstName + " " + _service.scannedPerson.LastName;
         _timeOfScan = DateTime.now();
 
-        //problem with timezone probably
-        _timeOfScan.add(new Duration(hours: 2));
-
         _service.addUser(_service.scannedPerson.FirstName, _service.scannedPerson.LastName,
             "${_timeOfScan.day}-${_timeOfScan.month}-${_timeOfScan.year} ${_timeOfScan.hour}:${_timeOfScan.minute}:${_timeOfScan.second}");
 
         images.drawAgain();
         numberOfSameImgs = images.numberOfSameImages();
-        
         
         //sequence of menu movement
         menuAnimate(1, 1);

@@ -36,7 +36,7 @@ class Service{
       NfcCode: 0,
       IsCurrentlyWorking: 0
   );
-
+  //perhaps move to another json file
   static String debugHttpAddressBeginning = "http://10.0.2.2:3000/";
   static String serviceHttpAddressBeginning = "http://localhost:3000/";
   

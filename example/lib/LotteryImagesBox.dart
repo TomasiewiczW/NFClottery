@@ -26,23 +26,13 @@ class LotteryImageBoxWidget extends StatelessWidget{
             shrinkWrap: true,
             padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
             controller: scrollController[0],
-            children: <Widget>[
-              //list of lotteryImagesRoulette elements
-              new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 0,),
-              new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 1,),
-              new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 2,),
-              new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 3,),
-              new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 1,),
-              new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 0,),
-              new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 1,),
-              new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 4,),
-              new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 3,),
-              new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 4,),
-              new LotteryImageWidget(drawnImgs: this.randomImages.drawnImages, drawnImgsIndex: 0,),
-              new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 1,),
-              new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 2,),
-              new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 3,),
-            ],
+              final children <Widget>[];
+              for(var i = 0; i < 15; i++){
+                if(i == 10)
+                  children.add(new LotteryImageWidget(drawnImgs: this.randomImages.drawnImages, drawnImgsIndex: 0,),);
+                else
+                children.add(new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: i%5,));
+              }
           ),
         ),
         Container(
@@ -55,24 +45,13 @@ class LotteryImageBoxWidget extends StatelessWidget{
             physics: NeverScrollableScrollPhysics(),
             padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
             controller: scrollController[1],
-            children: <Widget>[
-              //list of lotteryImagesRoulette elements
-              new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 1,),
-              new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 3,),
-              new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 2,),
-              new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 3,),
-              new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 4,),
-              new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 2,),
-              new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 1,),
-              new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 1,),
-              new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 3,),
-              new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 3,),
-              new LotteryImageWidget(drawnImgs: this.randomImages.drawnImages, drawnImgsIndex: 1,),
-              new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 1,),
-              new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 1,),
-              new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 2,),
-            ],
-
+              final children <Widget>[];
+              for(var i = 0; i < 15; i++){
+              if(i == 10)
+              children.add(new LotteryImageWidget(drawnImgs: this.randomImages.drawnImages, drawnImgsIndex: 1,),);
+              else
+              children.add(new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: i%5,));
+              }
           ),
         ),
         Container(
@@ -85,23 +64,13 @@ class LotteryImageBoxWidget extends StatelessWidget{
             physics: NeverScrollableScrollPhysics(),
             padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
             controller: scrollController[2],
-            children: <Widget>[
-              //list of lotteryImagesRoulette elements
-              new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 3,),
-              new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 1,),
-              new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 2,),
-              new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 3,),
-              new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 2,),
-              new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 0,),
-              new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 1,),
-              new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 1,),
-              new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 3,),
-              new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 1,),
-              new LotteryImageWidget(drawnImgs: this.randomImages.drawnImages, drawnImgsIndex: 2,),
-              new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 3,),
-              new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 1,),
-              new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: 2,),
-            ],
+            final children <Widget>[];
+            for(var i = 0; i < 15; i++){
+            if(i == 10)
+            children.add(new LotteryImageWidget(drawnImgs: this.randomImages.drawnImages, drawnImgsIndex: 2,),);
+            else
+            children.add(new LotteryImageWidget(drawnImgs: this.randomImages.importedImages, drawnImgsIndex: i%5,));
+            }
 
           ),
         ),

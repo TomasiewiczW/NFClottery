@@ -14,19 +14,14 @@ class RandomImg{
   void drawAgain(){
     drawnImages = _drawYourLuck(drawnImages.length, importedImages);
   }
-
   List<Image> importImg(){
-    List<Image> l = new List<Image>();
-    Image i = new Image(image: AssetImage('img/bbq4it.png'));
-    l.add(i);
-    i = new Image(image: AssetImage('img/centrumSzkoleniowe.png'));
-    l.add(i);
-    i = new Image(image: AssetImage('img/ratusz.png'));
-    l.add(i);
-    i = new Image(image: AssetImage('img/szkolaSportowa.png'));
-    l.add(i);
-    i = new Image(image: AssetImage('img/towarzystwoSportowe.png'));
-    l.add(i);
+    List<Image> l = new List<Image>{
+      new Image(image: AssetImage('img/bbq4it.png')),
+      new Image(image: AssetImage('img/ratusz.png')),
+      new Image(image: AssetImage('img/centrumSzkoleniowe.png')),
+      new Image(image: AssetImage('img/szkolaSportowa.png')),
+      new Image(image: AssetImage('img/towarzystwoSportowe.png'))
+    };
     return l;
   }
 
@@ -40,7 +35,7 @@ class RandomImg{
     for(int i = 0; i < drawnImages.length; i++){
       for(int j = i + 1; j < drawnImages.length; j++){
         if(drawnImages[i].image.toString()==drawnImages[j].image.toString()) n++;
-        //thrash return, change it pls
+        //if all same, return
         if(n==2) return n;
       }
     }
@@ -48,10 +43,11 @@ class RandomImg{
   }
 
   List<Image> _drawYourLuck(int numberOfDraws, List<Image> imagesToDraw){
-    List<Image> l = new List<Image>();
-    l.add(findRandomImg(imagesToDraw));
-    l.add(findRandomImg(imagesToDraw));
-    l.add(findRandomImg(imagesToDraw));
+    List<Image> l = new List<Image>{
+      findRandomImg(imagesToDraw),
+      findRandomImg(imagesToDraw),
+      findRandomImg(imagesToDraw)
+    };
     return l;
   }
 }
